@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/daengro/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/daengro/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/daengro",
+  "projects": {
+    "daengro": {
+      "type": "application",
+      "root": "apps/daengro",
+      "entryFile": "main",
+      "sourceRoot": "apps/daengro/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/daengro/tsconfig.app.json"
+      }
+    },
+    "grant": {
+      "type": "application",
+      "root": "apps/grant",
+      "entryFile": "main",
+      "sourceRoot": "apps/grant/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/grant/tsconfig.app.json"
+      }
+    },
+    "apply": {
+      "type": "application",
+      "root": "apps/apply",
+      "entryFile": "main",
+      "sourceRoot": "apps/apply/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/apply/tsconfig.app.json"
+      }
+    }
+  }
+}
