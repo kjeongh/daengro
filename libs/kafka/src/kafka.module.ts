@@ -1,4 +1,4 @@
-import { Module, type Provider } from '@nestjs/common';
+import { Module, type DynamicModule, type Provider } from '@nestjs/common';
 import { KafkaService } from './kafka.service';
 import { ConfigModule } from '@daengro/config';
 import { KAFKA_CLIENT } from './constants/kafka-client';
@@ -19,4 +19,16 @@ const KafkaClientProvider: Provider = {
   ],
   exports: [KafkaService],
 })
-export class KafkaModule {}
+
+export class KafkaModule {
+  static forRoot(): DynamicModule {
+    return {
+      module: KafkaModule,
+      providers: [
+        KafkaClientProvider,
+        KafkaService,
+      ],
+      exports: [KAFKA_CLIENT, KafkaService],
+    }
+  }
+}
