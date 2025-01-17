@@ -7,6 +7,6 @@ export class ApplyController {
 
   @Get()
   getHello(): string {
-    return this.applyService.getHello();
+    return this.applyService.create();
   }
 }
