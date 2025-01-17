@@ -100,7 +100,11 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(@nestjs/common@10.4.15(reflect-metadata@0.1.14)(rxjs@7.8.1))(rxjs@7.8.1)
 
-  libs/kafka: {}
+  libs/kafka:
+    dependencies:
+      kafkajs:
+        specifier: ^2.2.4
+        version: 2.2.4
 
 packages:
 
@@ -5175,8 +5179,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  kafkajs@2.2.4:
-    optional: true
+  kafkajs@2.2.4: {}
 
   keyv@4.5.4:
     dependencies:

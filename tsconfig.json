@@ -18,28 +18,28 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/packages": [
+      "@daengro/packages": [
         "libs/packages/src"
       ],
-      "@app/packages/*": [
+      "@daengro/packages/*": [
         "libs/packages/src/*"
       ],
-      "@app/kafka": [
+      "@daengro/kafka": [
         "libs/kafka/src"
       ],
-      "@app/kafka/*": [
+      "@daengro/kafka/*": [
         "libs/kafka/src/*"
       ],
-      "@app/storage": [
+      "@daengro/storage": [
         "libs/storage/src"
       ],
-      "@app/storage/*": [
+      "@daengro/storage/*": [
         "libs/storage/src/*"
       ],
-      "@app/config": [
+      "@daengro/config": [
         "libs/config/src"
       ],
-      "@app/config/*": [
+      "@daengro/config/*": [
         "libs/config/src/*"
       ]
     }
