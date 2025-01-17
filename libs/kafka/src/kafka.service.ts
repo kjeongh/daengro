@@ -7,7 +7,6 @@ import type { Topic } from './constants/topic.constants';
 @Injectable()
 export class KafkaService implements OnModuleInit, OnModuleDestroy {
     private producer: Producer;
-    private consumers = new Map<string, Consumer>();
 
     constructor(
         @Inject(KAFKA_CLIENT) private readonly kafkaClient: Kafka
@@ -70,14 +69,14 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
 
         await consumer.connect();
 
-        for (const topic of topics) {
-            this.consumers.set(`${topic}-${groupId}`, consumer);
-        }
-
         await consumer.subscribe({
             topics,
         })
         
         await consumer.run();
     }
+
+    // disconnect consumer
+
+    // disconnect all consumers
 }
