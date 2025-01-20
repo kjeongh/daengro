@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule as GlobalConfigModule } from '@nestjs/config';
 import { ConfigService } from './config.service';
-
+import configuration from '../configuration';
 /**
  * 전역 설정 모듈
  */
@@ -9,7 +9,8 @@ import { ConfigService } from './config.service';
   imports: [
     GlobalConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env'],
+      envFilePath: ['./libs/config/.env'],
+      load: [configuration],
     })
   ],
   providers: [ConfigService],

@@ -1,0 +1,1 @@
+export const KAFKA_GROUP_ID = 'apply-event';
