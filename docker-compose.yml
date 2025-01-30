@@ -4,45 +4,45 @@ version: "3.8"
 # SPDX-License-Identifier: APACHE-2.0
 
 services:
-  redis:
-    image: redis:7.4.1-alpine
-    container_name: redis-con
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./data/redis/dump:/data
-      - ./data/redis/scripts:/etc/scripts
-#    command:
-#      [
-#        "sh", "-c",
-#        "
-#        redis-server & \
-#        sleep 3 && \
-#        HASH=$(redis-cli SCRIPT LOAD \"$(cat /etc/scripts/apply.lua)\") && \
-#        redis-cli SET scripts:apply $HASH
-#        "
-#      ]
-  redis-ui:
-    image: redis/redisinsight:latest
-    container_name: redis-ui-con
-    ports:
-        - "8081:8081"
+#   redis:
+#     image: redis:7.4.1-alpine
+#     container_name: redis-con
+#     ports:
+#       - "6379:6379"
+#     volumes:
+#       - ./data/redis/dump:/data
+#       - ./data/redis/scripts:/etc/scripts
+# #    command:
+# #      [
+# #        "sh", "-c",
+# #        "
+# #        redis-server & \
+# #        sleep 3 && \
+# #        HASH=$(redis-cli SCRIPT LOAD \"$(cat /etc/scripts/apply.lua)\") && \
+# #        redis-cli SET scripts:apply $HASH
+# #        "
+# #      ]
+#   redis-ui:
+#     image: redis/redisinsight:latest
+#     container_name: redis-ui-con
+#     ports:
+#         - "8081:8081"
 
   kafka-1:
     image: bitnami/kafka:3.7
     container_name: kafka-1-con
     ports:
-      - "9092:9092"
+      - "9091:19092"
     environment:
       # KRaft settings
       - KAFKA_CFG_NODE_ID=1
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:19093,2@kafka-2:19093,3@kafka-3:19093
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:29091,2@kafka-2:29091,3@kafka-3:29091
       - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT_INTERNAL://:19092,CONTROLLER://:19093,PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka-1:19092
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT_INTERNAL://:9092,PLAINTEXT_EXTERNAL://:19092,CONTROLLER://:29091
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT_INTERNAL://kafka-2:9092,PLAINTEXT_EXTERNAL://localhost:9091
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT_EXTERNAL:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT_INTERNAL
       # Clustering
@@ -55,17 +55,17 @@ services:
     image: bitnami/kafka:3.7
     container_name: kafka-2-con
     ports:
-      - "9093:9092"
+      - "9093:19093"
     environment:
       # KRaft settings
       - KAFKA_CFG_NODE_ID=2
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:19093,2@kafka-2:19093,3@kafka-3:19093
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:29091,2@kafka-2:29091,3@kafka-3:29091
       - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT_INTERNAL://:19092,CONTROLLER://:19093,PLAINTEXT://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9093,PLAINTEXT_INTERNAL://kafka-2:19092
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT_INTERNAL://:9092,PLAINTEXT_EXTERNAL://:19093,CONTROLLER://:29091
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT_INTERNAL://kafka-2:9092,PLAINTEXT_EXTERNAL://localhost:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT_EXTERNAL:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT_INTERNAL
       # Clustering
@@ -78,17 +78,17 @@ services:
     image: bitnami/kafka:3.7
     container_name: kafka-3-con
     ports:
-      - "9094:9092"
+      - "9094:19094"
     environment:
       # KRaft settings
       - KAFKA_CFG_NODE_ID=3
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:19093,2@kafka-2:19093,3@kafka-3:19093
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:29091,2@kafka-2:29091,3@kafka-3:29091
       - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT_INTERNAL://:19092,CONTROLLER://:19093,PLAINTEXT://:9094
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9094,PLAINTEXT_INTERNAL://kafka-3:19092
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT_INTERNAL://:9092,PLAINTEXT_EXTERNAL://:19094,CONTROLLER://:29091
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT_INTERNAL://kafka-2:9092,PLAINTEXT_EXTERNAL://localhost:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT_EXTERNAL:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER # 컨트롤러의 리스너명
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT_INTERNAL
       # Clustering
@@ -98,27 +98,27 @@ services:
     volumes:
       - ./data/kafka/3:/bitnami/kafka
 
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
-    container_name: kafka-ui-con
-    environment:
-      DYNAMIC_CONFIG_ENABLED: true
-      KAFKA_CLUSTERS_0_NAME: test
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:19092,kafka-2:19092,kafka-3:19092
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-    ports:
-      - "8080:8080"
+  # kafka-ui:
+  #   image: provectuslabs/kafka-ui:latest
+  #   container_name: kafka-ui-con
+  #   environment:
+  #     DYNAMIC_CONFIG_ENABLED: true
+  #     KAFKA_CLUSTERS_0_NAME: test
+  #     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:29091,kafka-2:29091,kafka-3:29091
+  #   depends_on:
+  #     - kafka-1
+  #     - kafka-2
+  #     - kafka-3
+  #   ports:
+  #     - "8080:8080"
 
-  db:
-    image: mysql:8.0.38
-    container_name: db-con
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: root123!
-    volumes:
-      - ./data/db:/var/lib/mysql
+  # db:
+  #   image: mysql:8.0.38
+  #   container_name: db-con
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: root123!
+  #   volumes:
+  #     - ./data/db:/var/lib/mysql
