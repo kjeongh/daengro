@@ -8,17 +8,20 @@ import type { KafkaMessage } from '@nestjs/microservices/external/kafka.interfac
 export class IssueService implements OnModuleInit{
 
   constructor(
-    @Inject(KAFKA_CLIENT) private readonly kafka: KafkaService,
+    private readonly kafka: KafkaService,
   ) {}
 
   // kafka consumer 초기화
-  onModuleInit() {
-    this.kafka.initConsumer({
-      groupId: 'issue-rewar',
+  async onModuleInit() {
+    await this.kafka.initConsumer({
+      groupId: 'issue-reward',
       topics: [TOPIC.APPLY_EVENT],
       eachMessage: async({ message }) => {
         this.handleApplyEvent(message);
       }
+    })
+    .catch((error) => {
+      console.error('Failed to initialize Kafka consumer: ', error);
     });
   }
 
