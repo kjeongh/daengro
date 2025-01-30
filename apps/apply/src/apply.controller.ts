@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApplyService } from './apply.service';
 
 @Controller('apply')
@@ -8,7 +8,8 @@ export class ApplyController {
     ) {}
 
     @Post('/event')
-    async apply() {
-        return this.applyService.applyEvent();
+    async apply(@Body() body: any): Promise<string> {
+        const userId = body.userId;
+        return this.applyService.applyEvent(userId);
     }
 }

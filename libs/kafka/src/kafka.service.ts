@@ -1,6 +1,6 @@
 import { Inject, Injectable, type OnModuleDestroy, type OnModuleInit } from '@nestjs/common';
 import { KAFKA_CLIENT } from './constants/kafka-client';
-import type { Consumer, ConsumerConfig, Kafka, Producer, ProducerRecord } from 'kafkajs';
+import type { EachMessageHandler, Kafka, Producer, ProducerRecord } from 'kafkajs';
 import type { Topic } from './constants/topic.constants';
 
 
@@ -23,7 +23,7 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
     }
 
     private async initProducer() {
-        if (this.producer) return;
+        // if (this.producer) return;
 
         this.producer = this.kafkaClient.producer();
         await this.producer.connect();
@@ -41,6 +41,8 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
     }: ProducerRecord) {
         await this.initProducer();
 
+        console.log(this.producer)
+
         try {
             await this.producer.send({
                 topic,
@@ -54,9 +56,11 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
     public async initConsumer({
         groupId,
         topics,
+        eachMessage,
     }: {
         groupId: string;
         topics: Topic[];
+        eachMessage: EachMessageHandler;
     }) {
         const consumer = this.kafkaClient.consumer({
             groupId,
@@ -73,7 +77,9 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
             topics,
         })
         
-        await consumer.run();
+        await consumer.run({
+            eachMessage,
+        });
     }
 
     // disconnect consumer

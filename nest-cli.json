@@ -19,13 +19,13 @@
         "tsConfigPath": "apps/daengro/tsconfig.app.json"
       }
     },
-    "grant": {
+    "issue": {
       "type": "application",
-      "root": "apps/grant",
+      "root": "apps/issue",
       "entryFile": "main",
-      "sourceRoot": "apps/grant/src",
+      "sourceRoot": "apps/issue/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/grant/tsconfig.app.json"
+        "tsConfigPath": "apps/issue/tsconfig.app.json"
       }
     },
     "apply": {
@@ -71,6 +71,15 @@
       "sourceRoot": "libs/config/src",
       "compilerOptions": {
         "tsConfigPath": "libs/config/tsconfig.lib.json"
+      }
+    },
+    "redis": {
+      "type": "library",
+      "root": "libs/redis",
+      "entryFile": "index",
+      "sourceRoot": "libs/redis/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/redis/tsconfig.lib.json"
       }
     }
   }

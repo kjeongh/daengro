@@ -79,7 +79,8 @@
       "^@app/packages(|/.*)$": "<rootDir>/libs/packages/src/$1",
       "^@app/kafka(|/.*)$": "<rootDir>/libs/kafka/src/$1",
       "^@app/storage(|/.*)$": "<rootDir>/libs/storage/src/$1",
-      "^@app/config(|/.*)$": "<rootDir>/libs/config/src/$1"
+      "^@app/config(|/.*)$": "<rootDir>/libs/config/src/$1",
+      "^@app/redis(|/.*)$": "<rootDir>/libs/redis/src/$1"
     }
   }
 }

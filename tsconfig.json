@@ -41,6 +41,12 @@
       ],
       "@daengro/config/*": [
         "libs/config/src/*"
+      ],
+      "@daengro/redis": [
+        "libs/redis/src"
+      ],
+      "@daengro/redis/*": [
+        "libs/redis/src/*"
       ]
     }
   }
