@@ -4,29 +4,29 @@ version: "3.8"
 # SPDX-License-Identifier: APACHE-2.0
 
 services:
-#   redis:
-#     image: redis:7.4.1-alpine
-#     container_name: redis-con
-#     ports:
-#       - "6379:6379"
-#     volumes:
-#       - ./data/redis/dump:/data
-#       - ./data/redis/scripts:/etc/scripts
-# #    command:
-# #      [
-# #        "sh", "-c",
-# #        "
-# #        redis-server & \
-# #        sleep 3 && \
-# #        HASH=$(redis-cli SCRIPT LOAD \"$(cat /etc/scripts/apply.lua)\") && \
-# #        redis-cli SET scripts:apply $HASH
-# #        "
-# #      ]
-#   redis-ui:
-#     image: redis/redisinsight:latest
-#     container_name: redis-ui-con
-#     ports:
-#         - "8081:8081"
+  redis:
+    image: redis:7.4.1-alpine
+    container_name: redis-con
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis/dump:/data
+      - ./data/redis/scripts:/etc/scripts
+  #  command:
+  #    [
+  #      "sh", "-c",
+  #      "
+  #      redis-server & \
+  #      sleep 3 && \
+  #      HASH=$(redis-cli SCRIPT LOAD \"$(cat /etc/scripts/apply.lua)\") && \
+  #      redis-cli SET scripts:apply $HASH
+  #      "
+  #    ]
+  # redis-ui:
+  #   image: redis/redisinsight:latest
+  #   container_name: redis-ui-con
+  #   ports:
+  #       - "8081:8081"
 
   kafka-1:
     image: bitnami/kafka:3.7
@@ -99,18 +99,18 @@ services:
       - ./data/kafka/3:/bitnami/kafka
 
   # kafka-ui:
-  #   image: provectuslabs/kafka-ui:latest
-  #   container_name: kafka-ui-con
-  #   environment:
-  #     DYNAMIC_CONFIG_ENABLED: true
-  #     KAFKA_CLUSTERS_0_NAME: test
-  #     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:29091,kafka-2:29091,kafka-3:29091
-  #   depends_on:
-  #     - kafka-1
-  #     - kafka-2
-  #     - kafka-3
-  #   ports:
-  #     - "8080:8080"
+    # image: provectuslabs/kafka-ui:latest
+    # container_name: kafka-ui-con
+    # environment:
+    #   DYNAMIC_CONFIG_ENABLED: true
+    #   KAFKA_CLUSTERS_0_NAME: test
+    #   KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:29091,kafka-2:29091,kafka-3:29091
+    # depends_on:
+    #   - kafka-1
+    #   - kafka-2
+    #   - kafka-3
+    # ports:
+    #   - "8080:8080"
 
   # db:
   #   image: mysql:8.0.38
