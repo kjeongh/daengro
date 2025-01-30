@@ -36,7 +36,10 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # env files
-.env.*
+*.env
 
 # volumes
 /data
+
+# temp
+/temp
