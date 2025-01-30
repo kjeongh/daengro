@@ -28,4 +28,9 @@ export class RedisService {
     public useCommand(command: string, keys: string[], args: string[]) {
         return this.redisClient[command](...keys, ...args);
     }
+
+    // 초기화
+    public async deleteSet(key: string) {
+        await this.redisClient.del(key);
+    };
 }

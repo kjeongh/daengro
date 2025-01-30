@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Post } from '@nestjs/common';
 import { ApplyService } from './apply.service';
 
 @Controller('apply')
@@ -11,5 +11,10 @@ export class ApplyController {
     async apply(@Body() body: any): Promise<string> {
         const userId = body.userId;
         return this.applyService.applyEvent(userId);
+    }
+
+    @Delete('/reset')
+    async reset(): Promise<void> {
+        return this.applyService.resetApplies();
     }
 }

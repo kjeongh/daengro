@@ -5,8 +5,6 @@ import { HttpException, Injectable, type OnModuleInit } from "@nestjs/common";
 import { APPLY_SCRIPT_NAME } from "./constants/apply.constants";
 import * as fs from 'fs';
 import * as path from "path";
-import type * as fs from "fs";
-import type * as path from "path";
 
 @Injectable()
 export class ApplyService implements OnModuleInit{
@@ -40,14 +38,14 @@ export class ApplyService implements OnModuleInit{
             throw new HttpException({
                 name: 'EventClosed',
                 message: '이미 선착순 이벤트가 종료되었습니다.',
-            }, 400);
+            }, 410);
 
         } else if (addedCount === 0) {
 
             throw new HttpException({
                 name: 'AlreadyApplied',
                 message: '이미 신청한 사용자입니다.',
-            }, 400);
+            }, 409);
 
         } else if (addedCount === 1) {
 
@@ -74,5 +72,19 @@ export class ApplyService implements OnModuleInit{
         } else {
             throw new Error('Invalid addedCount')
         }
+    }
+
+    /** 신청 초기화 */
+    async resetApplies() {
+        // 신청 기록 삭제
+        const applyFilePath = path.join(process.cwd(), 'temp/apply_history.txt');
+        await fs.promises.unlink(applyFilePath);
+
+        // redis set 초기화
+        this.redis.deleteSet('apply:requests');
+
+        // 쿠폰 발급 기록 삭제
+        const receiveFilePath = path.join(process.cwd(), 'temp/receive_history.txt');
+        await fs.promises.unlink(receiveFilePath);
     }
 }
