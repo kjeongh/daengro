@@ -1,7 +1,7 @@
 import { KafkaService } from "@daengro/kafka";
 import { TOPIC } from "@daengro/kafka/constants/topic.constants";
 import { RedisService } from "@daengro/redis";
-import { Injectable, type OnModuleInit } from "@nestjs/common";
+import { HttpException, Injectable, type OnModuleInit } from "@nestjs/common";
 import { APPLY_SCRIPT_NAME } from "./constants/apply.constants";
 import * as fs from 'fs';
 import * as path from "path";
@@ -37,13 +37,17 @@ export class ApplyService implements OnModuleInit{
 
         if(addedCount === -1) {
 
-            console.log('이미 선착순 이벤트가 종료되었습니다.');
-            throw new Error('이벤트 종료');
+            throw new HttpException({
+                name: 'EventClosed',
+                message: '이미 선착순 이벤트가 종료되었습니다.',
+            }, 400);
 
         } else if (addedCount === 0) {
 
-            console.log('이미 신청한 사용자입니다.');
-            throw new Error('이미 신청함');
+            throw new HttpException({
+                name: 'AlreadyApplied',
+                message: '이미 신청한 사용자입니다.',
+            }, 400);
 
         } else if (addedCount === 1) {
 
