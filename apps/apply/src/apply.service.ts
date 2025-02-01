@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import * as path from "path";
 
 @Injectable()
-export class ApplyService implements OnModuleInit{
+export class ApplyService implements OnModuleInit {
     constructor(
         private readonly kafka: KafkaService,
         private readonly redis: RedisService,

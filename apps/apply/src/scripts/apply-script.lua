@@ -4,7 +4,7 @@ local zsetKey = KEYS[1]
 local value = ARGV[1]
 
 -- 10000명까지만 받도록 함
-local limit = 10
+local limit = 100
 
 -- 현재 시간 가져오기 (초 + 마이크로초)
 local currentTime = redis.call("TIME")

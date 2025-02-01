@@ -15,7 +15,5 @@ export const connectKafkaClient = (configService: ConfigService): Kafka => {
         logLevel: logLevel.INFO,
     };
 
-    console.log(kafkaConfig)
-
     return new Kafka(kafkaConfig);
 }

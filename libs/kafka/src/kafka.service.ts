@@ -41,15 +41,13 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
     }: ProducerRecord) {
         await this.initProducer();
 
-        console.log(this.producer)
-
         try {
             await this.producer.send({
                 topic,
                 messages
             });
         } catch (error) {
-            throw new Error('Failed to send message to Kafka');
+            console.log(`Failed to send message to Kafka: ${messages[0].value}`, error);
         }
     }
 
